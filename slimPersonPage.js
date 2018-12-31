@@ -59,7 +59,6 @@ const watchRequest = new XMLHttpRequest();
 watchRequest.open('HEAD', 'https://beta.familysearch.org/service/cmn/watch/watches?resourceId=' + pid + '_p_fs-ft_production-staging-2&sessionId=' + sessionId, true);
 // _p_fs-ft_production-staging-2
 //_p_fs-ft_ftint
-watchRequest.setRequestHeader('accept', 'application/json');
 watchRequest.send();
 watchRequest.addEventListener('readystatechange', processWatchRequest, false);
 
@@ -127,5 +126,25 @@ function processLabelsRequest() {
     for (let i = 0; i < labels.length; i++) {
       console.log('label=' + labels[i].label.name);
     }
+  }
+}
+
+const possibleDuplicatesRequest = new XMLHttpRequest();
+possibleDuplicatesRequest.open('GET', 'https://beta.familysearch.org/platform/tree/persons/' + pid + '/matches?confidence=4&count=100&sessionId=' + sessionId, true);
+possibleDuplicatesRequest.setRequestHeader('accept', 'application/json');
+possibleDuplicatesRequest.send();
+possibleDuplicatesRequest.addEventListener('readystatechange', processPossibleDuplicatesRequest, false);
+
+function processPossibleDuplicatesRequest() {
+  if (possibleDuplicatesRequest.readyState === 4 && possibleDuplicatesRequest.status === 200) {
+    const response = JSON.parse(possibleDuplicatesRequest.responseText);
+    const data = document.getElementById('possibleDuplicatesData');
+    data.innerText = JSON.stringify(response);
+    console.log('possibleDuplicates=' + response.results);
+  }
+  else if (possibleDuplicatesRequest.readyState === 4 && possibleDuplicatesRequest.status === 204) {
+    const data = document.getElementById('possibleDuplicatesData');
+    data.innerText = JSON.stringify('No possible duplicates for pid=' + pid);
+    console.log('possibleDuplicates=0')
   }
 }
