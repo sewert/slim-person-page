@@ -24,10 +24,12 @@ ftUserRequest.addEventListener('readystatechange', processFtUserRequest, false);
 
 function processFtUserRequest() {
   if (ftUserRequest.readyState === 4 && ftUserRequest.status === 200) {
-    const response = JSON.parse(tfRequest.responseText);
+    const response = JSON.parse(ftUserRequest.responseText);
     const data = document.getElementById('ftUserData');
     data.innerText = JSON.stringify(response);
-    // TODO: CISID needed for fs-user call
+    console.log('displayName=' + response.displayName);
+    console.log('cisId=' + response.id);
+    // TODO: cisId needed for fs-user call
   }
 }
 
