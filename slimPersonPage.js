@@ -45,10 +45,10 @@ function processCasRequest() {
     const data = document.getElementById('casData');
     data.innerText = JSON.stringify(response);
     if (response.authorized === true) {
-      console.log('User has permission');
+      console.log('ViewTempleUIPermission=true');
     }
     else {
-      console.log('User does not have permission');
+      console.log('ViewTempleUIPermission=false');
     }
     // TODO: need to combine permission with showLDSTempleInfo preference
     // TODO: needed before calling temple status
@@ -67,10 +67,10 @@ function processWatchRequest() {
     const data = document.getElementById('watchData');
     data.innerText = JSON.stringify(response);
     if (response.watch[0] !== undefined) {
-      console.log('Person is watched');
+      console.log('watched=true');
     }
     else {
-      console.log('Person is not watched');
+      console.log('watched=false');
     }
   }
 }
@@ -86,7 +86,7 @@ function processTpsRequest() {
     const response = JSON.parse(tpsRequest.responseText);
     const data = document.getElementById('tpsData');
     data.innerText = JSON.stringify(response);
-    console.log('Portrait url=' + response.portraitUrls.thumbSquareUrl);
+    console.log('awsPortraitUrl=' + response.portraitUrls.thumbSquareUrl);
   }
   else if (tpsRequest.readyState === 4 && tpsRequest.status === 404) {
     const data = document.getElementById('tpsData');
@@ -107,7 +107,7 @@ function processMemoriesManagerRequest() {
     const data = document.getElementById('memoriesManagerData');
     data.innerText = JSON.stringify(response);
     console.log('memoryCount=' + response.artifactCount); // this call is only to display how many memories there are on the person
-    console.log('thumbSquareUrl=' + response.thumbSquareUrl); // this also returns the thumbnail for the PID using tps/stream instead of AWS s3
+    console.log('tpsPortraitUrl=' + response.thumbSquareUrl); // this also returns the thumbnail for the PID using tps/stream instead of AWS s3
   }
 }
 
