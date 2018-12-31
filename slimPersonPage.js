@@ -9,8 +9,22 @@ tfRequest.addEventListener('readystatechange', processTfRequest, false);
 
 function processTfRequest() {
   if (tfRequest.readyState === 4 && tfRequest.status === 200) { // if DONE
+    var response = JSON.parse(tfRequest.responseText); // object we can work with
+    var data = document.getElementById('tfData');
+    data.innerText = JSON.stringify(response); // convert back to string
+  }
+}
+
+var ftUserRequest = new XMLHttpRequest();
+ftUserRequest.open('GET', 'https://integration.familysearch.org/ftuser/users/CURRENT' + '?sessionId=' + sessionId, true);
+ftUserRequest.send();
+ftUserRequest.addEventListener('readystatechange', processFtUserRequest, false);
+
+function processFtUserRequest() {
+  if (ftUserRequest.readyState === 4 && ftUserRequest.status === 200) {
     var response = JSON.parse(tfRequest.responseText);
-    var body = document.getElementById('bodyId');
-    body.innerText = JSON.stringify(response);
+    var data = document.getElementById('ftUserData');
+    data.innerText = JSON.stringify(response);
+    // TODO: CISID needed for fs-user call
   }
 }
