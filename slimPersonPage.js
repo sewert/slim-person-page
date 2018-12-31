@@ -43,5 +43,26 @@ function processCasRequest() {
     var data = document.getElementById('casData');
     data.innerText = JSON.stringify(response);
     // TODO: need to combine permission with showLDSTempleInfo preference
+    // TODO: needed before calling temple status
+  }
+}
+
+const watchRequest = new XMLHttpRequest();
+watchRequest.open('GET', 'https://integration.familysearch.org/service/cmn/watch/watches?resourceId=' + pid + '_p_fs-ft_ftint&sessionId=' + sessionId, true);
+watchRequest.setRequestHeader('accept', 'application/json');
+watchRequest.send();
+watchRequest.addEventListener('readystatechange', processWatchRequest, false);
+
+function processWatchRequest() {
+  if (watchRequest.readyState === 4 && watchRequest.status === 200) {
+    var response = JSON.parse(watchRequest.responseText);
+    var data = document.getElementById('watchData');
+    data.innerText = JSON.stringify(response);
+    if (response.watch[0] !== undefined) {
+      console.log('Person is watched');
+    }
+    else {
+      console.log('Person is not watched');
+    }
   }
 }
