@@ -42,6 +42,12 @@ function processCasRequest() {
     var response = JSON.parse(casRequest.responseText);
     var data = document.getElementById('casData');
     data.innerText = JSON.stringify(response);
+    if (response.authorized === true) {
+      console.log('User has permission');
+    }
+    else {
+      console.log('User does not have permission');
+    }
     // TODO: need to combine permission with showLDSTempleInfo preference
     // TODO: needed before calling temple status
   }
