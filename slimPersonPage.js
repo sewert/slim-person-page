@@ -148,3 +148,28 @@ function processPossibleDuplicatesRequest() {
     console.log('possibleDuplicates=0')
   }
 }
+
+const recordHintsRequest = new XMLHttpRequest();
+recordHintsRequest.open('GET', 'https://beta.familysearch.org/platform/tree/persons/' + pid + '/matches?confidence=4&count=100&includeSummary=true&collection=https://familysearch.org/platform/collections/records&status=Pending&status=Rejected&sessionId=' + sessionId, true);
+recordHintsRequest.setRequestHeader('accept', 'application/json');
+recordHintsRequest.send();
+recordHintsRequest.addEventListener('readystatechange', processRecordHintsRequest, false);
+
+function processRecordHintsRequest() {
+  if (recordHintsRequest.readyState === 4 && recordHintsRequest.status === 200) {
+    const response = JSON.parse(recordHintsRequest.responseText);
+    const data = document.getElementById('recordHintsData');
+    data.innerText = JSON.stringify(response);
+    const entries = response.entries;
+    for (let i = 0; i < entries.length; i++) {
+      console.log('recordHintLink=' + entries[i].id);
+      console.log('recordHintTitle=' + entries[i].title)
+    }
+    console.log('recordHintsCount=' + response.results);
+  }
+  else if (recordHintsRequest.readyState === 4 && recordHintsRequest.status === 204) {
+    const data = document.getElementById('recordHintsData');
+    data.innerText = JSON.stringify('No record hints for pid=' + pid);
+    console.log('No record hints')
+  }
+}
