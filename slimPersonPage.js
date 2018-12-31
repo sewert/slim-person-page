@@ -3,7 +3,7 @@ const sessionId = urlParams.get('sessionId');
 const pid = urlParams.get('pid');
 
 const tfRequest = new XMLHttpRequest();
-tfRequest.open('GET', 'https://integration.familysearch.org/tf/person/' + pid + '?oneHops=cards&includeSuggestions=true&contactNames=true&sessionId=' + sessionId, true);
+tfRequest.open('GET', 'https://beta.familysearch.org/tf/person/' + pid + '?oneHops=cards&includeSuggestions=true&contactNames=true&sessionId=' + sessionId, true);
 tfRequest.setRequestHeader('accept', 'application/json');
 tfRequest.send();
 tfRequest.addEventListener('readystatechange', processTfRequest, false);
@@ -17,7 +17,7 @@ function processTfRequest() {
 }
 
 const ftUserRequest = new XMLHttpRequest();
-ftUserRequest.open('GET', 'https://integration.familysearch.org/ftuser/users/CURRENT' + '?sessionId=' + sessionId, true);
+ftUserRequest.open('GET', 'https://beta.familysearch.org/ftuser/users/CURRENT' + '?sessionId=' + sessionId, true);
 ftUserRequest.setRequestHeader('accept', 'application/json');
 ftUserRequest.send();
 ftUserRequest.addEventListener('readystatechange', processFtUserRequest, false);
@@ -32,7 +32,7 @@ function processFtUserRequest() {
 }
 
 const casRequest = new XMLHttpRequest();
-casRequest.open('GET', 'https://integration.familysearch.org/cas-public-api/authorization/v1/authorize?perm=ViewTempleUIPermission&context=FtNormalUserContext&sessionId=' + sessionId, true);
+casRequest.open('GET', 'https://beta.familysearch.org/cas-public-api/authorization/v1/authorize?perm=ViewTempleUIPermission&context=FtNormalUserContext&sessionId=' + sessionId, true);
 casRequest.setRequestHeader('accept', 'application/json');
 casRequest.send();
 casRequest.addEventListener('readystatechange', processCasRequest, false);
@@ -54,7 +54,7 @@ function processCasRequest() {
 }
 
 const watchRequest = new XMLHttpRequest();
-watchRequest.open('GET', 'https://integration.familysearch.org/service/cmn/watch/watches?resourceId=' + pid + '_p_fs-ft_ftint&sessionId=' + sessionId, true);
+watchRequest.open('GET', 'https://beta.familysearch.org/service/cmn/watch/watches?resourceId=' + pid + '_p_fs-ft_ftint&sessionId=' + sessionId, true);
 watchRequest.setRequestHeader('accept', 'application/json');
 watchRequest.send();
 watchRequest.addEventListener('readystatechange', processWatchRequest, false);
@@ -74,7 +74,7 @@ function processWatchRequest() {
 }
 
 const tpsRequest = new XMLHttpRequest();
-tpsRequest.open('GET', 'https://integration.familysearch.org/service/memories/tps/persons/' + pid + '/portrait?sessionId=' + sessionId, true);
+tpsRequest.open('GET', 'https://beta.familysearch.org/service/memories/tps/persons/' + pid + '/portrait?sessionId=' + sessionId, true);
 tpsRequest.setRequestHeader('accept', 'application/json');
 tpsRequest.send();
 tpsRequest.addEventListener('readystatechange', processTpsRequest, false);
@@ -84,6 +84,7 @@ function processTpsRequest() {
     const response = JSON.parse(tpsRequest.responseText);
     const data = document.getElementById('tpsData');
     data.innerText = JSON.stringify(response);
+    console.log('Portrait url =' + response.portraitUrls.thumbSquareUrl);
   }
   else if (tpsRequest.readyState === 4 && tpsRequest.status === 404) {
     const data = document.getElementById('tpsData');
@@ -92,7 +93,7 @@ function processTpsRequest() {
 }
 
 const memoriesManagerRequest = new XMLHttpRequest();
-memoriesManagerRequest.open('GET', 'https://integration.familysearch.org/service/memories/manager/persons/personsByTreePersonId/' + pid + '/summary?includeArtifactCount=true&sessionId=' + sessionId, true);
+memoriesManagerRequest.open('GET', 'https://beta.familysearch.org/service/memories/manager/persons/personsByTreePersonId/' + pid + '/summary?includeArtifactCount=true&sessionId=' + sessionId, true);
 memoriesManagerRequest.setRequestHeader('accept', 'application/json');
 memoriesManagerRequest.send();
 memoriesManagerRequest.addEventListener('readystatechange', processMemoriesManagerRequest, false);
