@@ -108,3 +108,21 @@ function processMemoriesManagerRequest() {
     console.log('thumbSquareUrl=' + response.thumbSquareUrl); // this also returns the thumbnail for the PID using tps/stream instead of AWS s3
   }
 }
+
+const labelsRequest = new XMLHttpRequest();
+labelsRequest.open('GET', 'https://beta.familysearch.org/service/tree/labels/persons?personId=' + pid + '&includeLabels=true&sessionId=' + sessionId, true);
+labelsRequest.setRequestHeader('accept', 'application/json');
+labelsRequest.send();
+labelsRequest.addEventListener('readystatechange', processLabelsRequest, false);
+
+function processLabelsRequest() {
+  if (labelsRequest.readyState === 4 && labelsRequest.status === 200) {
+    const response = JSON.parse(labelsRequest.responseText);
+    const data = document.getElementById('labelsData');
+    data.innerText = JSON.stringify(response);
+    const labels = response.personAttachments;
+    for (let i = 0; i < labels.length; i++) {
+      console.log('label=' + labels[i].label.name);
+    }
+  }
+}
