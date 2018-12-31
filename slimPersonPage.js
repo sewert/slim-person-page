@@ -10,8 +10,8 @@ tfRequest.addEventListener('readystatechange', processTfRequest, false);
 
 function processTfRequest() {
   if (tfRequest.readyState === 4 && tfRequest.status === 200) { // if DONE
-    var response = JSON.parse(tfRequest.responseText); // object we can work with
-    var data = document.getElementById('tfData');
+    const response = JSON.parse(tfRequest.responseText); // object we can work with
+    const data = document.getElementById('tfData');
     data.innerText = JSON.stringify(response); // convert back to string
   }
 }
@@ -24,8 +24,8 @@ ftUserRequest.addEventListener('readystatechange', processFtUserRequest, false);
 
 function processFtUserRequest() {
   if (ftUserRequest.readyState === 4 && ftUserRequest.status === 200) {
-    var response = JSON.parse(tfRequest.responseText);
-    var data = document.getElementById('ftUserData');
+    const response = JSON.parse(tfRequest.responseText);
+    const data = document.getElementById('ftUserData');
     data.innerText = JSON.stringify(response);
     // TODO: CISID needed for fs-user call
   }
@@ -39,8 +39,8 @@ casRequest.addEventListener('readystatechange', processCasRequest, false);
 
 function processCasRequest() {
   if (casRequest.readyState === 4 && casRequest.status === 200) {
-    var response = JSON.parse(casRequest.responseText);
-    var data = document.getElementById('casData');
+    const response = JSON.parse(casRequest.responseText);
+    const data = document.getElementById('casData');
     data.innerText = JSON.stringify(response);
     if (response.authorized === true) {
       console.log('User has permission');
@@ -61,8 +61,8 @@ watchRequest.addEventListener('readystatechange', processWatchRequest, false);
 
 function processWatchRequest() {
   if (watchRequest.readyState === 4 && watchRequest.status === 200) {
-    var response = JSON.parse(watchRequest.responseText);
-    var data = document.getElementById('watchData');
+    const response = JSON.parse(watchRequest.responseText);
+    const data = document.getElementById('watchData');
     data.innerText = JSON.stringify(response);
     if (response.watch[0] !== undefined) {
       console.log('Person is watched');
@@ -70,5 +70,23 @@ function processWatchRequest() {
     else {
       console.log('Person is not watched');
     }
+  }
+}
+
+const tpsRequest = new XMLHttpRequest();
+tpsRequest.open('GET', 'https://integration.familysearch.org/service/memories/tps/persons/' + pid + '/portrait?sessionId=' + sessionId, true);
+tpsRequest.setRequestHeader('accept', 'application/json');
+tpsRequest.send();
+tpsRequest.addEventListener('readystatechange', processTpsRequest, false);
+
+function processTpsRequest() {
+  if (tpsRequest.readyState === 4 && tpsRequest.status === 200) {
+    const response = JSON.parse(tpsRequest.responseText);
+    const data = document.getElementById('tpsData');
+    data.innerText = JSON.stringify(response);
+  }
+  else if (tpsRequest.readyState === 4 && tpsRequest.status === 404) {
+    const data = document.getElementById('tpsData');
+    data.innerText = JSON.stringify('No portrait for pid=' + pid);
   }
 }
