@@ -90,3 +90,18 @@ function processTpsRequest() {
     data.innerText = JSON.stringify('No portrait for pid=' + pid);
   }
 }
+
+const memoriesManagerRequest = new XMLHttpRequest();
+memoriesManagerRequest.open('GET', 'https://integration.familysearch.org/service/memories/manager/persons/personsByTreePersonId/' + pid + '/summary?includeArtifactCount=true&sessionId=' + sessionId, true);
+memoriesManagerRequest.setRequestHeader('accept', 'application/json');
+memoriesManagerRequest.send();
+memoriesManagerRequest.addEventListener('readystatechange', processMemoriesManagerRequest, false);
+
+function processMemoriesManagerRequest() {
+  if (memoriesManagerRequest.readyState === 4 && memoriesManagerRequest.status === 200) {
+    const response = JSON.parse(memoriesManagerRequest.responseText);
+    const data = document.getElementById('memoriesManagerData');
+    data.innerText = JSON.stringify(response);
+    console.log('artifactCount=' + response.artifactCount); // this call is only to display how many memories there are on the person
+  }
+}
