@@ -56,22 +56,23 @@ function processCasRequest() {
 }
 
 const watchRequest = new XMLHttpRequest();
-watchRequest.open('GET', 'https://beta.familysearch.org/service/cmn/watch/watches?resourceId=' + pid + '_p_fs-ft_ftint&sessionId=' + sessionId, true);
+watchRequest.open('HEAD', 'https://beta.familysearch.org/service/cmn/watch/watches?resourceId=' + pid + '_p_fs-ft_production-staging-2&sessionId=' + sessionId, true);
+// _p_fs-ft_production-staging-2
+//_p_fs-ft_ftint
 watchRequest.setRequestHeader('accept', 'application/json');
 watchRequest.send();
 watchRequest.addEventListener('readystatechange', processWatchRequest, false);
 
 function processWatchRequest() {
   if (watchRequest.readyState === 4 && watchRequest.status === 200) {
-    const response = JSON.parse(watchRequest.responseText);
     const data = document.getElementById('watchData');
-    data.innerText = JSON.stringify(response);
-    if (response.watch[0] !== undefined) {
-      console.log('watched=true');
-    }
-    else {
-      console.log('watched=false');
-    }
+    data.innerText = 'pid=' + pid + " is watched";
+    console.log('watched=true');
+  }
+  else if (watchRequest.readyState === 4 && watchRequest.status === 204) {
+    const data = document.getElementById('watchData');
+    data.innerText = 'pid=' + pid + " is not watched";
+    console.log('watched=false');
   }
 }
 
