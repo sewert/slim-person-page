@@ -84,11 +84,12 @@ function processTpsRequest() {
     const response = JSON.parse(tpsRequest.responseText);
     const data = document.getElementById('tpsData');
     data.innerText = JSON.stringify(response);
-    console.log('Portrait url =' + response.portraitUrls.thumbSquareUrl);
+    console.log('Portrait url=' + response.portraitUrls.thumbSquareUrl);
   }
   else if (tpsRequest.readyState === 4 && tpsRequest.status === 404) {
     const data = document.getElementById('tpsData');
     data.innerText = JSON.stringify('No portrait for pid=' + pid);
+    console.log('No portrait for pid=' + pid);
   }
 }
 
@@ -103,6 +104,7 @@ function processMemoriesManagerRequest() {
     const response = JSON.parse(memoriesManagerRequest.responseText);
     const data = document.getElementById('memoriesManagerData');
     data.innerText = JSON.stringify(response);
-    console.log('artifactCount=' + response.artifactCount); // this call is only to display how many memories there are on the person
+    console.log('memoryCount=' + response.artifactCount); // this call is only to display how many memories there are on the person
+    console.log('thumbSquareUrl=' + response.thumbSquareUrl); // this also returns the thumbnail for the PID using tps/stream instead of AWS s3
   }
 }
