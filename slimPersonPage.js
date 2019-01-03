@@ -39,8 +39,15 @@ function processTfRequest() {
 
     html = '---OTHER INFORMATION---\n';
     for (let i = 0; i < facts.length; i++) {
-      if (facts[i].value.type !== "http://familysearch.org/v1/LifeSketch") { // need to weed out other vital facts (birth/death etc...)
-        html += JSON.stringify(facts[i]) + '\n';
+      if (facts[i].value.type !== "http://familysearch.org/v1/LifeSketch" &&
+        facts[i].value.type !=='http://gedcomx.org/BirthName' &&
+        facts[i].value.type !=='http://gedcomx.org/Male' &&
+        facts[i].value.type !=='http://gedcomx.org/Female' &&
+        facts[i].value.type !=='http://gedcomx.org/Birth' &&
+        facts[i].value.type !=='http://gedcomx.org/Christening' &&
+        facts[i].value.type !=='http://gedcomx.org/Burial' &&
+        facts[i].value.type !=='http://gedcomx.org/Death') {
+        html += JSON.stringify(facts[i]) + '\n\n';
       }
     }
     data = document.getElementById('otherInformation');
