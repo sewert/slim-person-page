@@ -20,6 +20,12 @@ function processTfRequest() {
     html += '\n' + response.id + ' ' + response.summary.gender;
     data.innerText = html;
     data.className += response.summary.gender;
+
+    data = document.getElementById('sourcesCount');
+    data.innerText = 'sourcesCount=' + response.summary.sourcesCount;
+
+    data = document.getElementById('collaborateCount');
+    data.innerText = 'Collaborate count is the sum of notes/discussions ' + 'notesCount=' + response.summary.notesCount + " discussionsCount=" + response.summary.discussionsCount;
   }
 }
 
@@ -68,13 +74,11 @@ watchRequest.addEventListener('readystatechange', processWatchRequest, false);
 function processWatchRequest() {
   if (watchRequest.readyState === 4 && watchRequest.status === 200) {
     const data = document.getElementById('watchData');
-    data.innerText = 'pid=' + pid + " is watched";
-    console.log('watched=true');
+    data.innerText = 'watched=true';
   }
   else if (watchRequest.readyState === 4 && watchRequest.status === 204) {
     const data = document.getElementById('watchData');
-    data.innerText = 'pid=' + pid + " is not watched";
-    console.log('watched=false');
+    data.innerText = 'watched=false';
   }
 }
 
@@ -106,10 +110,8 @@ memoriesManagerRequest.addEventListener('readystatechange', processMemoriesManag
 function processMemoriesManagerRequest() {
   if (memoriesManagerRequest.readyState === 4 && memoriesManagerRequest.status === 200) {
     const response = JSON.parse(memoriesManagerRequest.responseText);
-    const data = document.getElementById('memoriesManagerData');
-    data.innerText = JSON.stringify(response);
-    console.log('memoryCount=' + response.artifactCount); // this call is only to display how many memories there are on the person
-    console.log('tpsPortraitUrl=' + response.thumbSquareUrl); // this also returns the thumbnail for the PID using tps/stream instead of AWS s3
+    const data = document.getElementById('memoriesCount');
+    data.innerText = 'memoriesCount=' + response.artifactCount;
   }
 }
 
@@ -186,9 +188,8 @@ templeStatusRequest.addEventListener('readystatechange', processTempleStatusRequ
 function processTempleStatusRequest() {
   if (templeStatusRequest.readyState === 4 && templeStatusRequest.status === 200) {
     const response = JSON.parse(templeStatusRequest.responseText);
-    const data = document.getElementById('templeStatusData');
-    data.innerText = JSON.stringify(response);
-    console.log('temple-status=' + response.status);
+    const data = document.getElementById('templeStatusIcon');
+    data.innerText = 'templeStatusIcon=' + response.status;
   }
 }
 
