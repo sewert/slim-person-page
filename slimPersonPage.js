@@ -1,6 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const sessionId = urlParams.get('sessionId');
 const pid = urlParams.get('pid');
+const cisId = urlParams.get('cisId');
 
 const tfRequest = new XMLHttpRequest();
 tfRequest.open('GET', 'https://beta.familysearch.org/tf/person/' + pid + '?oneHops=cards&includeSuggestions=true&contactNames=true&sessionId=' + sessionId, true);
@@ -29,7 +30,6 @@ function processFtUserRequest() {
     data.innerText = JSON.stringify(response);
     console.log('displayName=' + response.displayName);
     console.log('cisId=' + response.id);
-    // TODO: cisId needed for fs-user call
   }
 }
 
@@ -171,5 +171,20 @@ function processRecordHintsRequest() {
     const data = document.getElementById('recordHintsData');
     data.innerText = JSON.stringify('No record hints for pid=' + pid);
     console.log('No record hints')
+  }
+}
+
+const templeStatusRequest = new XMLHttpRequest();
+templeStatusRequest.open('GET', 'https://beta.familysearch.org/tree/temple-status/person/' + pid + '/icon?sessionId=' + sessionId, true);
+templeStatusRequest.setRequestHeader('accept', 'application/json');
+templeStatusRequest.send();
+templeStatusRequest.addEventListener('readystatechange', processTempleStatusRequest, false);
+
+function processTempleStatusRequest() {
+  if (templeStatusRequest.readyState === 4 && templeStatusRequest.status === 200) {
+    const response = JSON.parse(templeStatusRequest.responseText);
+    const data = document.getElementById('templeStatusData');
+    data.innerText = JSON.stringify(response);
+    console.log('temple-status=' + response.status);
   }
 }
