@@ -60,12 +60,17 @@ function processTfRequest() {
     html += 'Christening: ' + JSON.stringify(response.christening) + '\n\n';
     html += 'Death: ' + JSON.stringify(response.death) + '\n\n';
     html += 'Burial: ' + JSON.stringify(response.burial) + '\n\n';
-
     data = document.getElementById('vitals');
     data.innerText = html;
 
     data = document.getElementById('deletePerson');
     data.innerText = 'Person deletable='+ response.deletable;
+
+    html = '---FAMILY MEMBERS---\n';
+    html += JSON.stringify(response.oneHopRelativeCards);
+    data = document.getElementById('familyMembers');
+    data.innerText = html;
+
   }
 }
 
