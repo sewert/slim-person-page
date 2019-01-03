@@ -143,12 +143,12 @@ possibleDuplicatesRequest.addEventListener('readystatechange', processPossibleDu
 function processPossibleDuplicatesRequest() {
   if (possibleDuplicatesRequest.readyState === 4 && possibleDuplicatesRequest.status === 200) {
     const response = JSON.parse(possibleDuplicatesRequest.responseText);
-    const data = document.getElementById('possibleDuplicatesData');
+    const data = document.getElementById('possibleDuplicates');
     data.innerText = JSON.stringify(response);
     console.log('possibleDuplicates=' + response.results);
   }
   else if (possibleDuplicatesRequest.readyState === 4 && possibleDuplicatesRequest.status === 204) {
-    const data = document.getElementById('possibleDuplicatesData');
+    const data = document.getElementById('possibleDuplicates');
     data.innerText = JSON.stringify('No possible duplicates for pid=' + pid);
     console.log('possibleDuplicates=0')
   }
@@ -163,7 +163,7 @@ recordHintsRequest.addEventListener('readystatechange', processRecordHintsReques
 function processRecordHintsRequest() {
   if (recordHintsRequest.readyState === 4 && recordHintsRequest.status === 200) {
     const response = JSON.parse(recordHintsRequest.responseText);
-    const data = document.getElementById('recordHintsData');
+    const data = document.getElementById('recordHints');
     data.innerText = JSON.stringify(response);
     const entries = response.entries;
     for (let i = 0; i < entries.length; i++) {
@@ -225,5 +225,20 @@ function processRecentsRequest() {
     // }
       console.log('recentDisplayName=' + entries[0].content.gedcomx.persons[0].display.name);
       console.log('recentPid=' + entries[0].id);
+  }
+}
+
+const changeSummary = new XMLHttpRequest();
+changeSummary.open('GET', 'https://beta.familysearch.org/tf/person/' + pid + '/changes/summary?sessionId=' + sessionId, true);
+changeSummary.setRequestHeader('accept', 'application/json');
+changeSummary.send();
+changeSummary.addEventListener('readystatechange', processChangesSummaryRequest, false);
+
+function processChangesSummaryRequest() {
+  if (changeSummary.readyState === 4 && changeSummary.status === 200) {
+    const response = JSON.parse(changeSummary.responseText);
+    const data = document.getElementById('changeLogSummary');
+    data.innerText = JSON.stringify(response);
+    console.log('recentDisplayName=' + response.changes.length);
   }
 }
