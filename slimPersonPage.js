@@ -188,3 +188,17 @@ function processTempleStatusRequest() {
     console.log('temple-status=' + response.status);
   }
 }
+
+const fsUserRequest = new XMLHttpRequest();
+fsUserRequest.open('GET', 'https://beta.familysearch.org/fs-user/users/' + cisId + '/preferences?name=tree.showLDSTempleInfo&sessionId=' + sessionId, true);
+fsUserRequest.setRequestHeader('accept', 'application/json');
+fsUserRequest.send();
+fsUserRequest.addEventListener('readystatechange', processFsUserRequest, false);
+
+function processFsUserRequest() {
+  if (fsUserRequest.readyState === 4 && fsUserRequest.status === 200) {
+    const response = JSON.parse(fsUserRequest.responseText);
+    const data = document.getElementById('fsUserData');
+    data.innerText = JSON.stringify(response);
+  }
+}
