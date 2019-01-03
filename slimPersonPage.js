@@ -37,9 +37,16 @@ function processTfRequest() {
     data = document.getElementById('lifeSketch');
     data.innerText = html;
 
-    facts = response.facts;
-    html = '---VITALS---:\n';
+    html = '---OTHER INFORMATION---\n';
+    for (let i = 0; i < facts.length; i++) {
+      if (facts[i].value.type !== "http://familysearch.org/v1/LifeSketch") { // need to weed out other vital facts (birth/death etc...)
+        html += JSON.stringify(facts[i]) + '\n';
+      }
+    }
+    data = document.getElementById('otherInformation');
+    data.innerText = html;
 
+    html = '---VITALS---:\n';
     html += 'Name: ' + JSON.stringify(response.name) + '\n\n';
     html += 'Sex: ' + JSON.stringify(response.gender) + '\n\n';
     html += 'Birth: ' + JSON.stringify(response.birth) + '\n\n';
