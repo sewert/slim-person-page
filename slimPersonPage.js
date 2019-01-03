@@ -202,3 +202,24 @@ function processFsUserRequest() {
     data.innerText = JSON.stringify(response);
   }
 }
+
+const recentsRequest = new XMLHttpRequest();
+recentsRequest.open('GET', 'https://beta.familysearch.org/platform/users/' + cisId + '/history?sessionId=' + sessionId, true);
+recentsRequest.setRequestHeader('accept', 'application/json');
+recentsRequest.send();
+recentsRequest.addEventListener('readystatechange', processRecentsRequest, false);
+
+function processRecentsRequest() {
+  if (recentsRequest.readyState === 4 && recentsRequest.status === 200) {
+    const response = JSON.parse(recentsRequest.responseText);
+    const data = document.getElementById('recentsData');
+    data.innerText = JSON.stringify(response);
+    const entries = response.entries;
+    // for (let i = 0; i < entries.length; i++) {
+    //   console.log('recentDisplayName=' + entries[i].content.gedcomx.persons[0].display.name); //  TODO: need to null check
+    //   console.log('recentPid=' + entries[i].id);
+    // }
+      console.log('recentDisplayName=' + entries[0].content.gedcomx.persons[0].display.name);
+      console.log('recentPid=' + entries[0].id);
+  }
+}
