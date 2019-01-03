@@ -16,7 +16,7 @@ function processTfRequest() {
     let html =  response.fullName;
     data.innerText = html;
     data = document.getElementById('personHeader');
-    html = 'Lifespan (tree-data adds in living/deceased): ' + response.summary.lifespanBegin.date.original + ' - ' + response.summary.lifespanEnd.date.original;
+    html = 'Lifespan (tree-data adds in living/deceased and determines if we use original/normalized): ' + response.summary.lifespanBegin.date.original + ' - ' + response.summary.lifespanEnd.date.original;
     html += '\n' + response.id + ' ' + response.summary.gender;
     data.innerText = html;
     data.className += response.summary.gender;
@@ -25,7 +25,7 @@ function processTfRequest() {
     data.innerText = 'sourcesCount=' + response.summary.sourcesCount;
 
     data = document.getElementById('collaborateCount');
-    data.innerText = 'Collaborate count is the sum of notes/discussions ' + 'notesCount=' + response.summary.notesCount + " discussionsCount=" + response.summary.discussionsCount;
+    data.innerText = 'collaborate count is the sum of notes/discussions ' + 'notesCount=' + response.summary.notesCount + " discussionsCount=" + response.summary.discussionsCount;
   }
 }
 
