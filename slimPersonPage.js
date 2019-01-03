@@ -27,9 +27,8 @@ function processFtUserRequest() {
   if (ftUserRequest.readyState === 4 && ftUserRequest.status === 200) {
     const response = JSON.parse(ftUserRequest.responseText);
     const data = document.getElementById('ftUserData');
-    data.innerText = JSON.stringify(response);
-    console.log('displayName=' + response.displayName);
-    console.log('cisId=' + response.id);
+    let html = 'Welcome, ' + response.displayName;
+    data.innerText = html;
   }
 }
 
