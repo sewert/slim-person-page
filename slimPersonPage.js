@@ -239,7 +239,7 @@ function processFsUserRequest() {
   if (fsUserRequest.readyState === 4 && fsUserRequest.status === 200) {
     const response = JSON.parse(fsUserRequest.responseText);
     const data = document.getElementById('fsUserData');
-    data.innerText = JSON.stringify(response);
+    data.innerText = '---USER PREFERENCES---\n Additional preferences should be added to the list fs-user call\n' + JSON.stringify(response);
   }
 }
 
