@@ -39,8 +39,7 @@ function processFtUserRequest() {
   if (ftUserRequest.readyState === 4 && ftUserRequest.status === 200) {
     const response = JSON.parse(ftUserRequest.responseText);
     const data = document.getElementById('ftUserData');
-    let html = 'Welcome, ' + response.displayName;
-    data.innerText = html;
+    data.innerText = 'Welcome, ' + response.displayName;
   }
 }
 
@@ -54,12 +53,11 @@ function processCasRequest() {
   if (casRequest.readyState === 4 && casRequest.status === 200) {
     const response = JSON.parse(casRequest.responseText);
     const data = document.getElementById('casData');
-    data.innerText = JSON.stringify(response);
     if (response.authorized === true) {
-      console.log('ViewTempleUIPermission=true');
+      data.innerText ='ViewTempleUIPermission=true';
     }
     else {
-      console.log('ViewTempleUIPermission=false');
+      data.innerText = 'ViewTempleUIPermission=false';
     }
   }
 }
