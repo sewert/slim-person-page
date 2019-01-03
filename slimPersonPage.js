@@ -27,9 +27,8 @@ function processTfRequest() {
     data = document.getElementById('collaborateCount');
     data.innerText = 'collaborate count is the sum of notes/discussions ' + 'notesCount=' + response.summary.notesCount + " discussionsCount=" + response.summary.discussionsCount;
 
-    const facts = response.facts;
-    html = 'Life Sketch:\n';
-
+    let facts = response.facts;
+    html = '---LIFE SKETCH---:\n';
     for (let i = 0; i < facts.length; i++) {
       if (facts[i].value.type === "http://familysearch.org/v1/LifeSketch") {
         html += facts[i].value.value + '\n';
@@ -37,6 +36,20 @@ function processTfRequest() {
     }
     data = document.getElementById('lifeSketch');
     data.innerText = html;
+
+    facts = response.facts;
+    html = '---VITALS---:\n';
+
+    html += 'Name: ' + JSON.stringify(response.name) + '\n\n';
+    html += 'Sex: ' + JSON.stringify(response.gender) + '\n\n';
+    html += 'Birth: ' + JSON.stringify(response.birth) + '\n\n';
+    html += 'Christening: ' + JSON.stringify(response.christening) + '\n\n';
+    html += 'Death: ' + JSON.stringify(response.death) + '\n\n';
+    html += 'Burial: ' + JSON.stringify(response.burial) + '\n\n';
+
+    data = document.getElementById('vitals');
+    data.innerText = html;
+
   }
 }
 
