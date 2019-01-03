@@ -26,6 +26,17 @@ function processTfRequest() {
 
     data = document.getElementById('collaborateCount');
     data.innerText = 'collaborate count is the sum of notes/discussions ' + 'notesCount=' + response.summary.notesCount + " discussionsCount=" + response.summary.discussionsCount;
+
+    const facts = response.facts;
+    html = 'Life Sketch:\n';
+
+    for (let i = 0; i < facts.length; i++) {
+      if (facts[i].value.type === "http://familysearch.org/v1/LifeSketch") {
+        html += facts[i].value.value + '\n';
+      }
+    }
+    data = document.getElementById('lifeSketch');
+    data.innerText = html;
   }
 }
 
