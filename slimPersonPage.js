@@ -64,6 +64,8 @@ function processTfRequest() {
     data = document.getElementById('vitals');
     data.innerText = html;
 
+    data = document.getElementById('deletePerson');
+    data.innerText = 'Person deletable='+ response.deletable;
   }
 }
 
