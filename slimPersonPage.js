@@ -11,9 +11,15 @@ tfRequest.addEventListener('readystatechange', processTfRequest, false);
 
 function processTfRequest() {
   if (tfRequest.readyState === 4 && tfRequest.status === 200) { // if DONE
-    const response = JSON.parse(tfRequest.responseText); // object we can work with
-    const data = document.getElementById('tfData');
-    data.innerText = JSON.stringify(response); // convert back to string
+    const response = JSON.parse(tfRequest.responseText);
+    let data = document.getElementById('personFullNameHeader');
+    let html =  response.fullName;
+    data.innerText = html;
+    data = document.getElementById('personHeader');
+    html = 'Lifespan (tree-data adds in living/deceased): ' + response.summary.lifespanBegin.date.original + ' - ' + response.summary.lifespanEnd.date.original;
+    html += '\n' + response.id + ' ' + response.summary.gender;
+    data.innerText = html;
+    data.className += response.summary.gender;
   }
 }
 
@@ -49,8 +55,6 @@ function processCasRequest() {
     else {
       console.log('ViewTempleUIPermission=false');
     }
-    // TODO: need to combine permission with showLDSTempleInfo preference
-    // TODO: needed before calling temple status
   }
 }
 
@@ -83,9 +87,8 @@ tpsRequest.addEventListener('readystatechange', processTpsRequest, false);
 function processTpsRequest() {
   if (tpsRequest.readyState === 4 && tpsRequest.status === 200) {
     const response = JSON.parse(tpsRequest.responseText);
-    const data = document.getElementById('tpsData');
-    data.innerText = JSON.stringify(response);
-    console.log('awsPortraitUrl=' + response.portraitUrls.thumbSquareUrl);
+    const data = document.getElementById('personPortrait');
+    data.src = response.portraitUrls.thumbSquareUrl;
   }
   else if (tpsRequest.readyState === 4 && tpsRequest.status === 404) {
     const data = document.getElementById('tpsData');
@@ -119,12 +122,13 @@ labelsRequest.addEventListener('readystatechange', processLabelsRequest, false);
 function processLabelsRequest() {
   if (labelsRequest.readyState === 4 && labelsRequest.status === 200) {
     const response = JSON.parse(labelsRequest.responseText);
-    const data = document.getElementById('labelsData');
-    data.innerText = JSON.stringify(response);
+    const data = document.getElementById('labels');
     const labels = response.personAttachments;
+    let html = '';
     for (let i = 0; i < labels.length; i++) {
-      console.log('label=' + labels[i].label.name);
+      html += labels[i].label.name + '\n';
     }
+    data.innerText = html;
   }
 }
 
