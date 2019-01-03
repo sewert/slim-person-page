@@ -19,6 +19,13 @@ const server = http.createServer(function (req, res) {
       res.end();
     });
   }
+  else if (req.url.indexOf('.ico') !== -1) {
+    fs.readFile('favicon.png', function(err, data) { // going to just return one icon file
+      res.writeHead(200, {'Content-Type': 'image/png'});
+      res.write(data);
+      res.end();
+    });
+  }
   else {
     fs.readFile('slimPersonPage.html', function(err, data) { // going to just return one html file
       res.writeHead(200, {'Content-Type': 'text/html'});
