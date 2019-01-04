@@ -16,7 +16,14 @@ function processTfRequest() {
     let html =  response.fullName;
     data.innerText = html;
     data = document.getElementById('personHeader');
-    html = 'Lifespan (tree-data adds in living/deceased and determines if we use original/normalized): ' + response.summary.lifespanBegin.date.original + ' - ' + response.summary.lifespanEnd.date.original;
+    html = 'Lifespan (tree-data adds in living/deceased and determines if we use original/normalized): ';
+    if (response.summary && response.summary.lifespanBegin && response.summary.lifespanBegin.date) {
+      html += response.summary.lifespanBegin.date.original;
+    }
+    html += ' - ';
+    if (response.summary && response.summary.lifespanEnd && response.summary.lifespanEnd.date) {
+      html += response.summary.lifespanEnd.date.original;
+    }
     html += '\n' + response.id + ' ' + response.summary.gender;
     data.innerText = html;
     data.className += response.summary.gender;
@@ -151,7 +158,7 @@ function processTpsRequest() {
     data.src = response.portraitUrls.thumbSquareUrl;
   }
   else if (tpsRequest.readyState === 4 && tpsRequest.status === 404) {
-    const data = document.getElementById('tpsData');
+    const data = document.getElementById('personPortrait');
     data.innerText = JSON.stringify('No portrait for pid=' + pid);
     console.log('No portrait for pid=' + pid);
   }
@@ -220,18 +227,18 @@ function processRecordHintsRequest() {
   if (recordHintsRequest.readyState === 4 && recordHintsRequest.status === 200) {
     const response = JSON.parse(recordHintsRequest.responseText);
     const data = document.getElementById('recordHints');
-    data.innerText = JSON.stringify(response);
+    let html = '---RECORD HINTS--- (still need to filter out rejected hints but the data is there)\n';
     const entries = response.entries;
     for (let i = 0; i < entries.length; i++) {
-      console.log('recordHintLink=' + entries[i].id);
-      console.log('recordHintTitle=' + entries[i].title)
+      html += 'recordHintLink=' + entries[i].id + '\n';
+      html += 'recordHintTitle=' + entries[i].title + '\n';
     }
-    console.log('recordHintsCount=' + response.results);
+    html += 'recordHintsCount=' + response.results + '\n';
+    data.innerText = html;
   }
   else if (recordHintsRequest.readyState === 4 && recordHintsRequest.status === 204) {
-    const data = document.getElementById('recordHintsData');
-    data.innerText = JSON.stringify('No record hints for pid=' + pid);
-    console.log('No record hints')
+    const data = document.getElementById('recordHints');
+    data.innerText = '---RECORD HINTS---\n No record hints for pid=' + pid + '\n';
   }
 }
 
