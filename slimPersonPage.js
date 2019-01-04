@@ -204,16 +204,16 @@ possibleDuplicatesRequest.send();
 possibleDuplicatesRequest.addEventListener('readystatechange', processPossibleDuplicatesRequest, false);
 
 function processPossibleDuplicatesRequest() {
+  let html = '---POSSIBLE DUPLICATES---\n';
   if (possibleDuplicatesRequest.readyState === 4 && possibleDuplicatesRequest.status === 200) {
     const response = JSON.parse(possibleDuplicatesRequest.responseText);
     const data = document.getElementById('possibleDuplicates');
-    data.innerText = JSON.stringify(response);
-    console.log('possibleDuplicates=' + response.results);
+    html += JSON.stringify(response);
+    data.innerText = html;
   }
   else if (possibleDuplicatesRequest.readyState === 4 && possibleDuplicatesRequest.status === 204) {
     const data = document.getElementById('possibleDuplicates');
-    data.innerText = JSON.stringify('No possible duplicates for pid=' + pid);
-    console.log('possibleDuplicates=0')
+    data.innerText = html + 'No possible duplicates for pid=' + pid;
   }
 }
 
