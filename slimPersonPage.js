@@ -279,15 +279,12 @@ recentsRequest.addEventListener('readystatechange', processRecentsRequest, false
 function processRecentsRequest() {
   if (recentsRequest.readyState === 4 && recentsRequest.status === 200) {
     const response = JSON.parse(recentsRequest.responseText);
-    const data = document.getElementById('recentsData');
-    data.innerText = JSON.stringify(response);
+    let html = '---Recents/History List---\n';
     const entries = response.entries;
-    // for (let i = 0; i < entries.length; i++) {
-    //   console.log('recentDisplayName=' + entries[i].content.gedcomx.persons[0].display.name); //  TODO: need to null check
-    //   console.log('recentPid=' + entries[i].id);
-    // }
-      console.log('recentDisplayName=' + entries[0].content.gedcomx.persons[0].display.name);
-      console.log('recentPid=' + entries[0].id);
+    html += 'recentDisplayName=' + entries[0].content.gedcomx.persons[0].display.name + '\n';
+    html += 'recentPid=' + entries[0].id + '\n';
+    const data = document.getElementById('recentsData');
+    data.innerText = html;
   }
 }
 
