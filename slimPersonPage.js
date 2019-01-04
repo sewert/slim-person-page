@@ -301,7 +301,6 @@ function processChangesSummaryRequest() {
   if (changeSummary.readyState === 4 && changeSummary.status === 200) {
     const response = JSON.parse(changeSummary.responseText);
     const data = document.getElementById('changeLogSummary');
-    data.innerText = JSON.stringify(response);
-    console.log('recentDisplayName=' + response.changes.length);
+    data.innerText = '---Change Log Summary---\n' + 'mostRecentChange=' + JSON.stringify(response.changes[0]);
   }
 }
