@@ -71,6 +71,19 @@ function processTfRequest() {
     data = document.getElementById('familyMembers');
     data.innerText = html;
 
+    html = '--- DATA PROBLEMS---\n';
+    if (response.suggestions) {
+      html += JSON.stringify(response.suggestions.dataQuality);
+    }
+    data = document.getElementById('dataProblems');
+    data.innerText = html;
+
+    html = '--- RESEARCH SUGGESTIONS---\n';
+    if (response.suggestions) {
+      html += JSON.stringify(response.suggestions.researchSuggestions);
+    }
+    data = document.getElementById('researchSuggestions');
+    data.innerText = html;
   }
 }
 
