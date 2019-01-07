@@ -301,3 +301,17 @@ function processChangesSummaryRequest() {
     data.innerText = '---Change Log Summary---\n' + 'mostRecentChange=' + JSON.stringify(response.changes[0]);
   }
 }
+
+const messageSummary = new XMLHttpRequest();
+messageSummary.open('GET', 'https://beta.familysearch.org/collaboration/messaging/api/users/' + cisId + '/counters' + '?sessionId=' + sessionId, true);
+messageSummary.setRequestHeader('accept', 'application/json');
+messageSummary.send();
+messageSummary.addEventListener('readystatechange', processMessageSummaryRequest, false);
+
+function processMessageSummaryRequest() {
+  if (messageSummary.readyState === 4 && messageSummary.status === 200) {
+    const response = JSON.parse(messageSummary.responseText);
+    const data = document.getElementById('messageData');
+    data.innerText = 'Unread messages: ' + response.totalUnreadMsgs;
+  }
+}

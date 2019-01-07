@@ -42,6 +42,8 @@ http://localhost:8080/?pid={pid}&sessionId={sessionId}&cisId={cisId}
     1) Returns recently viewed PIDS with their names
 13) tf/person/{PID}/changes/summary?contactNames=true
     1) Returns 3 most recent changes
+14) collaboration/messaging/api/users/{cisId}/counters
+    1) Returns if user has an messages
     
 ###Suggested calls
 
@@ -70,3 +72,6 @@ http://localhost:8080/?pid={pid}&sessionId={sessionId}&cisId={cisId}
 9)  platform/users/{cis.user.ID}/history
 10) tf/person/{PID}/changes/summary?contactNames=true
     1) Cached per PID per session if caching logic isn't too hard
+14) collaboration/messaging/api/users/{cisId}/counters
+    1) Returns if user has an messages
+    1) Could also combine this into a tree-data call for non-vitals stuff (labels, photos, etc) but looks like it comes from header/footer
