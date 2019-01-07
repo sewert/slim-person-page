@@ -14,7 +14,7 @@ http://localhost:8080/?pid={pid}&sessionId={sessionId}&cisId={cisId}
 
 
 
-###Necessary calls
+### Necessary calls
 
 1)  tf/person/{PID}?oneHops=cards&includeSuggestions=true&contactNames=true
     1) Returns core information: vitals, family members, research suggestions, data problems, is deletable, source counts, collaborate count, contributor count, user change count, life sketch, other information
@@ -45,7 +45,7 @@ http://localhost:8080/?pid={pid}&sessionId={sessionId}&cisId={cisId}
 14) collaboration/messaging/api/users/{cisId}/counters
     1) Returns if user has an messages
     
-###Suggested calls
+### Suggested calls
 
 1)  tree-data person details
     1) Consolidate tf/person/{PID}?oneHops=cards&includeSuggestions=true&contactNames=true
