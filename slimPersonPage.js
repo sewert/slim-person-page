@@ -118,11 +118,12 @@ function processCasRequest() {
   if (casRequest.readyState === 4 && casRequest.status === 200) {
     const response = JSON.parse(casRequest.responseText);
     const data = document.getElementById('casData');
+    let html = '---CAS PERMISSION CHECKS---\n Additional permissions should be consolidated into one cas or tree-data call\n';
     if (response.authorized === true) {
-      data.innerText ='ViewTempleUIPermission=true';
+      data.innerText = html + 'ViewTempleUIPermission=true';
     }
     else {
-      data.innerText = 'ViewTempleUIPermission=false';
+      data.innerText = html + 'ViewTempleUIPermission=false';
     }
   }
 }
@@ -279,7 +280,7 @@ recentsRequest.addEventListener('readystatechange', processRecentsRequest, false
 function processRecentsRequest() {
   if (recentsRequest.readyState === 4 && recentsRequest.status === 200) {
     const response = JSON.parse(recentsRequest.responseText);
-    let html = '---Recents/History List---\n';
+    let html = '---RECENTS/HISTORY LIST---\n';
     const entries = response.entries;
     html += 'recentDisplayName=' + entries[0].content.gedcomx.persons[0].display.name + '\n';
     html += 'recentPid=' + entries[0].id + '\n';
@@ -298,7 +299,7 @@ function processChangesSummaryRequest() {
   if (changeSummary.readyState === 4 && changeSummary.status === 200) {
     const response = JSON.parse(changeSummary.responseText);
     const data = document.getElementById('changeLogSummary');
-    data.innerText = '---Change Log Summary---\n' + 'mostRecentChange=' + JSON.stringify(response.changes[0]);
+    data.innerText = '---CHANGE LOG SUMMARY---\n' + 'mostRecentChange=' + JSON.stringify(response.changes[0]);
   }
 }
 
