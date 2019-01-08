@@ -12,7 +12,10 @@ URLs are hard coded to beta so you'll need to generate your own beta sessionid a
 http://localhost:8080/?pid={pid}&sessionId={sessionId}&cisId={cisId}
 
 
-
+### To Run
+1)  Clone repo
+2)  `node server.js`
+3)  Open a browser to http://localhost:8080?pid={PID}&cisId={CISID}&sessionId={SESSIONID}
 
 ### Necessary calls
 
